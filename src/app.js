@@ -3,6 +3,7 @@ const path = require('path')
 const express = require('express')
 const app = express()
 const hbs = require('hbs')
+const port = process.env.PORT || 3000
 app.use(express.static(path.join(__dirname,'../public')))
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname,'../templates/views'))
@@ -81,6 +82,6 @@ app.get('/list-n',(req,res)=>{
         res.send(note_titles)
     })
 })
-app.listen(3000,()=>{
-    console.log('Server is up and running on port 3000')
+app.listen(port,()=>{
+    console.log('Server is up and running on port')
 })
