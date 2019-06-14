@@ -1,6 +1,7 @@
 const fs = require('fs')
 const chalk = require('chalk')
-const addNote =(title,body)=>{
+const path  = require('path')
+const addNote =(title,body,callback)=>{
     const notes = loadNotes()
     //const duplicateNotes = notes.filter((note)=>note.title === title)
     // find stops searching when it finds the first matching element in array thus reducing the time consumed
@@ -12,51 +13,50 @@ const addNote =(title,body)=>{
             body:body
         })
         saveNotes(notes)
-        console.log(chalk.bgGreen('New Note Added'))
+        callback('New Note Added')
 
     }else {
-        console.log(chalk.bgRed('Note Title Taken!'))
+        callback('Note Title Taken!')
     }
 }
 const saveNotes =(notes)=>{
     const dataJSON = JSON.stringify(notes)
-    fs.writeFileSync('notes.json', dataJSON)
+    fs.writeFileSync(path.join(__dirname,'./notes.json'), dataJSON)
 }
 const loadNotes =()=>{
     try {
-        const dataBuffer = fs.readFileSync('notes.json')
+        const dataBuffer = fs.readFileSync(path.join(__dirname,'./notes.json'))
         const dataJSON = dataBuffer.toString()
         return JSON.parse(dataJSON)
     }catch(e){
         return []
     }
 }
-const removeNote = (title)=>{
+const removeNote = (title,callback)=>{
     const notes = loadNotes()
     const NotesToKeep = notes.filter((note)=>note.title !== title)
     if (NotesToKeep.length === notes.length){
-        console.log(chalk.bgRed('No note removed'))
+        callback('No note removed')
     }
     else{
-        console.log(chalk.bgGreen('Note Removed'))
+        callback('Note Removed')
         saveNotes(NotesToKeep)
     }
 }
-const listNotes=()=>{
-    console.log(chalk.inverse('Your Notes...'))
-    const notes = loadNotes()
-    notes.forEach(element => {
-        console.log( element.title)
-    })
+const listNotes=(callback)=>{
+    const note_titles = loadNotes()
+    callback(note_titles)
+    // notes.forEach(element => {
+    //     console.log( element.title)
+    // })
 }
-const readNote=(title)=>{
+const readNote=(title,callback)=>{
     const notes = loadNotes()
     const note = notes.find(element=>element.title === title)
     if(note){
-        console.log(chalk.bold(note.title))
-        console.log(note.body)
+        callback(note.body)
     }else{
-        console.log(chalk.bgRed('No Note Found'))
+        callback('No Note Found')
     }
 }
 module.exports = {

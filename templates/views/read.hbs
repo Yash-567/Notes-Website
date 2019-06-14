@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Read Note</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div id="main-content">
+        {{>header}}
+        {{>nav}}
+        <form>
+        <input id="read_t" placeholder="Title">
+        <button id="search">Search</button>
+        </form>
+        <p id="message1"></p>
+        <p id="message2"></p>
+    </div>
+    {{>footer}}
+    <script src="/js/read.js"></script>
+</body>
+</html>

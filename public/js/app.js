@@ -1,24 +1,21 @@
-const chalk = require('chalk');
-const validator = require('validator');
-const yargs = require('yargs');
-const notes = require('./notes.js')
-yargs.command({
-    command: 'add',
-    desc: 'add a command',
-    builder:{
-        title:{
-            desc: 'Note Title',
-            demandOption: true,
-            type: 'string'
-        },
-        body: {
-            desc: 'Note Body',
-            demandOption: true ,
-            type: 'string'
-        }
-    },
-    handler() {
-        notes.addNote(yargs.argv.title,yargs.argv.body)
+console.log('Client side javascript is loaded')
+const addForm = document.querySelector('#add_form')
+const input1 = document.querySelector('#add_t')
+const input2 = document.querySelector('#add_b')
+const add_message = document.querySelector('#add_message')
+addForm.addEventListener('submit',(e)=>{
+    e.preventDefault()
+
+    const add_title = input1.value
+    const add_body = input2.value
+    if(!add_title){
+        add_message.textContent = 'You must Provide a title'
+    }else{
+        fetch('/add-n?title='+add_title+'&body='+add_body).then((res)=>{
+            res.json().then((data)=>{
+                add_message.textContent = data.response
+            })
+        })
     }
 })
 yargs.command({
