@@ -1,5 +1,4 @@
 const fs = require('fs')
-const chalk = require('chalk')
 const path  = require('path')
 const addNote =(title,body,callback)=>{
     const notes = loadNotes()
